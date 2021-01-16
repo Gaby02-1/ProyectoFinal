@@ -1,0 +1,362 @@
+body{
+    margin: 0;
+    font-family: sans-serif;
+    min-height: 100vh;
+}
+
+
+header{
+    width: 100%;
+    height: 128px;
+    background:#ff9d00;
+    position: fixed;
+    overflow: hidden;
+    opacity: 0.9;
+    box-shadow: 0px 4px 3px rgba(0,0,0,.5);
+}
+
+h2{
+    margin-top:23px;
+    float: right;
+    color: #000;
+    margin-right: 12%;
+    display: none;
+}
+.Logo{
+    height: 70px;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+}
+.logos p{
+    font-size: 25px;
+}
+.Logo img{
+    height: 60px;
+    width: 80px;
+    margin-left: -50%;
+}
+.sesion img{
+    display: flex;
+    margin-right: 0px;
+    background-color: #048563;
+    border-radius: 5px;
+    margin-left: 95%;
+ }
+.logos{
+    display: flex;
+    flex-direction: row;
+}
+#btn-menu{
+   display: none;    
+}
+
+header label{
+    display: none;
+    width: 30px;
+    height: 30px;
+    padding: 10px;
+    
+}
+
+header label img{
+    width: 35px;
+    height: 35px;
+}
+
+header label:hover{
+    cursor: pointer;
+}
+.menu-fixed ul{
+    
+    list-style: none;
+    padding: 0;
+    display: flex;
+    margin-top: 0;
+    justify-content: flex-end;  
+
+}
+.menu-fixed{
+    display: flex;
+    height: 70px;
+    justify-content: flex-end;
+}
+.menu-fixed li:hover{
+    box-shadow: 0px 4px 0px orange;
+    background-color: aliceblue;
+}
+.menu-fixed li a{
+    display: inline-flex;
+    padding: 5px 20px;
+    text-decoration: none;
+    font-family: sans-serif;
+    
+}
+
+.menu-fixed li:hover{
+        transition: all 0.5s;
+    }
+   
+/***Codigo para el lado responsive***/
+
+@media (max-width:760px){
+    
+    header label{
+        display: block;
+    }
+    .menu-fixed{
+        position: absolute;
+        flex-direction: column;
+        width: 70%;
+        margin-left: -70%;
+        transition: all 0.5s;
+
+    }
+    .menu-fixed li:hover{
+    background-color: #fff;
+    }
+    
+    .menu-fixed ul{
+        flex-direction: column;
+        margin-top:10px;
+    }
+    
+    #btn-menu:checked ~ .menu-fixed{
+        margin: 0;
+    }
+    
+    
+    .menu-fixed li{
+        border-top: 1px solid #000;
+    }
+    h2{
+        display:inline-flex;
+        margin-top: 15px;
+    }
+    
+    .sesion img{
+    display: flex;
+    margin-left: 90%;
+ }
+  
+}
+
+.menu-fixed{
+    position: fixed;
+    z-index: 1000;
+    top: 20;
+    max-width: 70%;
+    
+}
+
+a img{
+    width: 23px;
+    height: 23px;
+    margin-top: 8px;
+}
+
+
+.menu-fixed li a p{
+    color: #000;
+    margin-left: 10px;
+}
+
+/************************************/
+
+.slider{
+    
+    width: 100%;
+    height: 100%;
+    margin:auto;
+    overflow: hidden;
+    
+    }
+
+.slider img {
+    height: 90%;
+    width: 100%;
+
+}
+
+.slider ul {
+    display: flex;
+    padding: 0;
+    width: 400%;
+    animation: cambio 20s infinite;
+    animation-direction: alternate-reverse;
+    animation-timing-function:linear;
+    transition: all 0.7s;
+    margin-top: 0;
+}
+
+.slider li{
+    list-style: none;
+    width: 90%;
+}
+
+@keyframes cambio{
+    
+    0% {margin-left: 0;}
+    20% {margin-left: 0;}
+    
+    25% {margin-left: -100%;}
+    45% {margin-left: -100%;}
+    
+    50% {margin-left: -200%;}
+    70% {margin-left: -200%;}
+    
+    75% {margin-left: -300%;}
+    100%{margin-left: -300%;}
+    
+}
+.cuerpo{
+    
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    text-align: justify;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex; 
+    flex-direction: column;
+     
+    
+}
+
+/*********************************/
+
+@media (max-width:760px){
+ .imagenes{
+    display: flex;
+    flex-direction: column;  
+    min-height: 87vh;
+ }
+    
+.pie_pagina{
+    min-height: 10vh;
+    display: flex;
+    justify-content: center;
+
+}
+    
+.pie_pagina ul{ 
+    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 5px;
+    
+}
+.pie_pagina ul li{ 
+    
+    display: flex;
+}
+
+     
+}
+/*********************************/
+.imagenes{
+    height:280px;
+    margin-top: 30px;
+    padding: 5px;
+    display: flex;
+}
+
+.img1{
+
+    height: 200px;
+    padding: 10px; 
+    overflow: hidden;
+}
+
+.img2{
+
+    height: 200px;
+    padding: 10px;
+    overflow: hidden;
+    
+}
+
+.img1 img{
+    width: 100%;
+    height:150px;
+    border-radius: 5px;
+
+}
+.img2 img{
+    width: 100%;
+    height: 150px;
+     border-radius: 5px;
+}
+
+ #descrip{
+    color: white;
+    flex-direction: column;
+    padding-top: 5px;
+    text-align: center;
+    height: 30px;
+    background-color: black;
+    overflow: hidden0;
+    border-radius: 5px;
+  
+}
+ #descrip p{
+    color: white;
+    padding: 0px 10px;
+    font-size: 14px;
+    display: flex;
+    font-family: sans-serif;
+    text-align: justify;
+  
+}
+.imagenes #descrip:hover{
+    
+    opacity: 0.9;
+    cursor: pointer;
+    height: 205px;
+    transition: 0.5s;
+}
+.info{
+    background:orange;
+    width: 100%;
+    height: 50px;
+}
+
+
+
+.pie_pagina{
+    
+    height: 80px;
+    min-height: 20vh;
+    display: flex;
+    justify-content: center;
+    background-color: #ff9d00;
+}
+
+.pie_pagina ul{   
+    display: flex; 
+    padding: 5px;
+    justify-content: space-around;
+    
+}
+.pie_pagina ul li{ 
+    
+    list-style: none;
+    width: 100px;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+}
+.pie_pagina ul li a{ 
+    
+    padding: 5px;
+    color: #000;
+    list-style: none;
+    text-decoration-line: none;
+}
+.pie_pagina ul li img{ 
+    height: 25px;
+}
+
+
+
