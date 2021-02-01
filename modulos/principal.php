@@ -26,8 +26,8 @@
            
             <ul>
                 <li><a href="index.php"><img src="Imagen/home3.png"><p>Inicio</p></a></li>
-                <li><a href="#"><img src="Imagen/buscar.png"><p>Buscar Producto</p></a></li>
-                <li><a href="#"><img src="Imagen/car.png"><p>Carrito</p></a></li>
+                <li><a href="buscarproducto.php"><img src="Imagen/buscar.png"><p>Buscar Producto</p></a></li>
+                <li><a href="carrito.php"><img src="Imagen/car.png"><p>Carrito</p></a></li>
                 <li><a href="#"><img src="Imagen/briefcase.png"><p>Pedido Pendiente</p></a></li>
                 <li><a href="login.php"><img src="Imagen/user.png"><p>Iniciar Sesión</p></a></li> 
             </ul>
