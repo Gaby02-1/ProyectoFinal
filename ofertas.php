@@ -6,10 +6,10 @@
     <meta name="description" content="">
     <title>Ofertas</title>
 
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/pricing/">
+    <link rel="canonical" href="">
  
     <link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
+
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -28,10 +28,10 @@
 
     
     <link href="css/pricing.css" rel="stylesheet">
+    </head>
+    
      <body>
     
-<header>
-</header>
 
 <main class="container">
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -75,7 +75,8 @@
           </div>
         </div>
      </div>
+   </div>
            
-  
+    </main> 
     </body>
 </html>
