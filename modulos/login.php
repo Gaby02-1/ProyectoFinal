@@ -1,67 +1,100 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Login</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<?php
+session_start();
+ 
+if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true){
+  header("location: index.php");
+  exit;
+}
+ 
+require_once "config.php";
+ 
+$username = $password = "";
+$username_err = $password_err = "";
+ 
+if($_SERVER["REQUEST_METHOD"] == "POST"){
+ 
+    if(empty(trim($_POST["username"]))){
+        $username_err = "Por favor ingrese su usuario.";
+    } else{
+        $username = trim($_POST["username"]);
+    }
     
+    if(empty(trim($_POST["password"]))){
+        $password_err = "Por favor ingrese su contraseña.";
+    } else{
+        $password = trim($_POST["password"]);
+    }
     
-          <link rel="stylesheet" type="text/css" href="css/style1.css">
+    if(empty($username_err) && empty($password_err)){
+        $sql = "SELECT id, username, password FROM users WHERE username = ?";
+        
+        if($stmt = mysqli_prepare($link, $sql)){
+            mysqli_stmt_bind_param($stmt, "s", $param_username);
+            
+            $param_username = $username;
+            
+            if(mysqli_stmt_execute($stmt)){
+                mysqli_stmt_store_result($stmt);
+                
+                if(mysqli_stmt_num_rows($stmt) == 1){                    
+                    mysqli_stmt_bind_result($stmt, $id, $username, $hashed_password);
+                    if(mysqli_stmt_fetch($stmt)){
+                        if(password_verify($password, $hashed_password)){
+                            session_start();
+                            
+                            $_SESSION["loggedin"] = true;
+                            $_SESSION["id"] = $id;
+                            $_SESSION["username"] = $username;                            
+                            
+                            header("location: index.php");
+                        } else{
 
-   </head>
-
-    <body>
-    <?php 
-        require_once 'connection.php';
-        $connection = new mysqli($dbhost, $dbuser, $dbpass, $dbname);
-        if ($connection->connect_error) die ("Fatal error");
-       
-        if(isset($_POST['usuarioCli']) && isset($_POST['contraseñaCliente']))
-        {
-        $un_temp= mysql_entities_fix_string($connection, $_POST['usuarioCli']);
-        $pw_temp =mysql_entities_fix_string($connection, $_POST['contraseñaCliente']);
-        $query = "SELECT * FROM usuarioCliente WHERE usuarioCli='$un_temp'";
-        $result = $connection->query($query);
-        if (!$result) die ("Usuario no encontrado");
-        elseif ($result->num_rows)
-           Echo "<center><br><br><br><br><br><br><br><br>
-        <a href='index.php'>ESCRIBIR TU DIARIO</a>
-        </center>";  
-        else
-        echo"<center><br><br><br><br><br>
-                    USUARIO O PASSWORD INCORRECTO<br><br>
-                     <a href='registrar.php'>REGISTRATE</a>
-                  </center><br>";
-
+                            $password_err = "La contraseña que has ingresado no es válida.";
+                        }
+                    }
+                } else{
+                    $username_err = "No existe cuenta registrada con ese nombre de usuario.";
+                }
+            } else{
+                echo "Algo salió mal, por favor vuelve a intentarlo.";
+            }
         }
-     else{
-        echo' <center><br><br><br><br>
-
-     <div class="container" id="login">
-        <div class="panel panel-primary">
-           <div class="panel-heading text-center">
-             <h2>Login</h2>
-         </div>
-         <div class="panel-body">
-
-         <h4>Usuario: </h4>
-         <input type="gmail" class="form-control" name="usuarioCli" placeholder="Usuario"><br>
-         <h4>Contraseña: </h4>
-
-         <input type="password" class="form-control" name="contraseñaCliente" placeholder="contraseña"><br>
-    </div>
-    <div class="panel-footer">
-         <button class="btn btn-primary">Ingresar</button>
-         <a href="registrar.php"><button class="btn btn-warning">Registrar</button>
-
-          </div>
-       </div>
-   </div> 
-            </center>'; 
-     }
-    ?>
-
-  </body>
-  </html>
-
+        
+        mysqli_stmt_close($stmt);
+    }
+    
+    mysqli_close($link);
+}
+?>
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.css">
+    <style type="text/css">
+        body{ font: 14px sans-serif; }
+        .wrapper{ width: 350px; padding: 20px; }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <h2>Iniciar Sesion</h2>
+        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
+                <input type="text" name="username" placeholder="Ingresa su usuario"required class="form-control" value="<?php echo $username; ?>">
+                <span class="help-block"><?php echo $username_err; ?></span>
+            </div>    
+            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
+                <input type="password" name="password" placeholder="Ingresa su password"required class="form-control">
+                <span class="help-block"><?php echo $password_err; ?></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Ingresar">
+            </div>
+            <a href="register.php">Regístrate</a>.</p>
+        </form>
+    </div>    
+</body>
+</html>
